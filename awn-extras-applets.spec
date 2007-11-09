@@ -1,6 +1,6 @@
 %define name awn-extras-applets
 %define version 0.2.1
-%define rel 2
+%define rel 3
 %define bzr 0
 
 %if %bzr
@@ -37,8 +37,8 @@ BuildRequires:	gnome-menus-devel
 BuildRequires:	librsvg-devel
 BuildRequires:	libgtop2.0-devel
 BuildRequires:	libsexy-devel
-BuildRequires:	avant-window-navigator
-Requires:	avant-window-navigator
+BuildRequires:	avant-window-navigator >= 0.2.1
+Requires:	avant-window-navigator >= 0.2.1
 Conflicts:	notification-daemon
 Provides:	virtual-notification-daemon
 
