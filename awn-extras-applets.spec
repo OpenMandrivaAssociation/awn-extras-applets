@@ -23,6 +23,7 @@ Source0:	%{srcname}.tar
 License:	GPLv2+ and LGPLv2+
 Group:		Graphical desktop/GNOME
 URL:		https://launchpad.net/awn-extras
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires:	gnome-common
 BuildRequires:	libGConf2-devel
 BuildRequires:	intltool
