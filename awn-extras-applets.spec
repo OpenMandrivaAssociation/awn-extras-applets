@@ -1,6 +1,6 @@
 %define name awn-extras-applets
 %define version 0.2.1
-%define rel 3
+%define rel 4
 %define bzr 0
 
 %if %bzr
@@ -62,6 +62,15 @@ battery monitor, trash applet, volume control, weather applet and more.
 %install
 rm -rf %{buildroot}
 %makeinstall_std
+
+# Provide a dbus .service file for the notification daemon
+mkdir -p %{buildroot}%{_datadir}/dbus-1/services
+cat > %{buildroot}%{_datadir}/dbus-1/services/org.freedesktop.Notifications.service <<EOF
+[D-BUS Service]
+Name=org.freedesktop.Notifications
+Exec=%{_libdir}/awn/applets/awnnotificationdaemon
+EOF
+
 %find_lang %name
 
 %post
@@ -79,4 +88,5 @@ rm -rf %{buildroot}
 %{_sysconfdir}/gconf/schemas/*
 %{_libdir}/awn/applets/*
 %{_datadir}/%{name}/*
+%{_datadir}/dbus-1/services/org.freedesktop.Notifications.service
 
