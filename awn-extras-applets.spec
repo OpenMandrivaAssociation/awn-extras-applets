@@ -1,23 +1,21 @@
-%define name awn-extras-applets
-%define version 0.2.1
-%define rel 4
+%define rel 5
 %define bzr 0
 
 %if %bzr
-%define srcname %{name}-%{bzr}
-%define distname %{name}
-%define release %mkrel 0.%{bzr}.%{rel}
+%define srcname		%{name}-%{bzr}
+%define distname	%{name}
+%define release		%mkrel 0.%{bzr}.%{rel}
 %else
-%define srcname %{name}-%{version}
-%define distname %{name}-%{version}
-%define release %mkrel %{rel}
+%define srcname		%{name}-%{version}
+%define distname	%{name}-%{version}
+%define release		%mkrel %{rel}
 %endif
 
-%define schemas switcher trash filebrowser awnsystemmonitor notification-daemon
+%define schemas switcher trash filebrowser awnsystemmonitor awn-notification-daemon
 
 Summary:	Applets for Avant Window Navigator
-Name:		%{name}
-Version:	%{version}
+Name:		awn-extras-applets
+Version:	0.2.1
 Release:	%{release}
 Source0:	%{srcname}.tar
 License:	GPLv2+ and LGPLv2+
@@ -39,8 +37,7 @@ BuildRequires:	libgtop2.0-devel
 BuildRequires:	libsexy-devel
 BuildRequires:	avant-window-navigator >= 0.2.1
 Requires:	avant-window-navigator >= 0.2.1
-Conflicts:	notification-daemon
-Provides:	virtual-notification-daemon
+Requires:	notification-daemon
 
 %description
 Avant-window-navigator is a dock-style window list for GNOME. It provides
@@ -51,6 +48,12 @@ battery monitor, trash applet, volume control, weather applet and more.
 
 %prep
 %setup -q -n %{distname}
+# Rename notification-daemon.schemas to awn-notification-daemon.schemas
+# Change has been made upstream, fixes conflict with the real
+# notification-daemon - AdamW 2008/02
+mv src/awn-notification-daemon/data/notification-daemon.schemas.in src/awn-notification-daemon/data/awn-notification-daemon.schemas.in
+sed -i -e 's,notification-daemon.schemas.in,awn-notification-daemon.schemas.in,g' src/awn-notification-daemon/data/Makefile.in
+sed -i -e 's,notification-daemon.schemas.in,awn-notification-daemon.schemas.in,g' src/awn-notification-daemon/data/Makefile.am
 
 %build
 %if %bzr
@@ -62,15 +65,6 @@ battery monitor, trash applet, volume control, weather applet and more.
 %install
 rm -rf %{buildroot}
 %makeinstall_std
-
-# Provide a dbus .service file for the notification daemon
-mkdir -p %{buildroot}%{_datadir}/dbus-1/services
-cat > %{buildroot}%{_datadir}/dbus-1/services/org.freedesktop.Notifications.service <<EOF
-[D-BUS Service]
-Name=org.freedesktop.Notifications
-Exec=%{_libdir}/awn/applets/awnnotificationdaemon
-EOF
-
 %find_lang %name
 
 %post
@@ -88,5 +82,4 @@ rm -rf %{buildroot}
 %{_sysconfdir}/gconf/schemas/*
 %{_libdir}/awn/applets/*
 %{_datadir}/%{name}/*
-%{_datadir}/dbus-1/services/org.freedesktop.Notifications.service
 
