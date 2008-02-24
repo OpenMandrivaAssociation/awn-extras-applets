@@ -18,11 +18,17 @@
 
 %define schemas switcher trash filebrowser awnsystemmonitor awn-notification-daemon
 
+%define python_compile_opt python -O -c "import compileall; compileall.compile_dir('.')"
+%define python_compile     python -c "import compileall; compileall.compile_dir('.')"
+
 Summary:	Applets for Avant Window Navigator
 Name:		awn-extras-applets
 Version:	0.2.6
 Release:	%{release}
 Source0:	%{srcname}.tar.gz
+# From upstream dev malept: install Python stuff to platsitedir not
+# puresitedir - AdamW 2008/02
+Patch0:		awn-extras-applets-0.2.6-platsitedir.patch
 License:	GPLv2+ and LGPLv2+
 Group:		Graphical desktop/GNOME
 URL:		https://launchpad.net/awn-extras
@@ -100,11 +106,13 @@ This package contains the development library for awn-extras-applets.
 
 %prep
 %setup -q -n %{distname}
+%patch0 -p1 -b .platsitedir
 
 %build
 %if %bzr
 ./autogen.sh -V
 %endif
+autoreconf
 %configure --disable-schemas-install
 %make
 
@@ -112,6 +120,19 @@ This package contains the development library for awn-extras-applets.
 rm -rf %{buildroot}
 %makeinstall_std
 %find_lang %name
+
+# Pre-generate .pyc and .pyo files as per Python policy.
+pushd src
+%python_compile_opt
+%python_compile
+for i in PyClock "arss/Core" arss battery-applet calendar "calendar/google/atom" "calendar/google/gdata" "calendar/google/gdata/apps" "calendar/google/gdata/base" "calendar/google/gdata/calendar" "calendar/google/gdata/docs" "calendar/google/gdata/spreadsheet" comic digitalClock file-browser-launcher lastfm mail media-control media-icon-back media-icon-next media-icon-play mount-applet python-test quit-applet showdesktop stacks volume-control weather; \
+do install $i/*.pyc $i/*.pyo %{buildroot}%{_libdir}/awn/applets/$i; \
+done
+# Grr. Stupid upstream with their non-matching directory names! They
+# promise they will fix this.
+install pandora/*.pyc pandora/*.pyo %{buildroot}%{_libdir}/awn/applets/awn-pandora
+install MiMenu/*.pyc MiMenu/*.pyo %{buildroot}%{_libdir}/awn/applets/mimenu
+install tsclient-applet/*.pyc tsclient-applet/*.pyo %{buildroot}%{_libdir}/awn/applets/tsclient-app
 
 %post
 %post_install_gconf_schemas %{schemas}
@@ -133,6 +154,7 @@ rm -rf %{buildroot}
 %{_iconsdir}/hicolor/*/*/*.*
 %{_bindir}/affinity-preferences
 %{py_platsitedir}/awn/extras
+%{py_puresitedir}/awn/extras
 
 %files -n %{libname}
 %{_libdir}/*.so.%{major}*
