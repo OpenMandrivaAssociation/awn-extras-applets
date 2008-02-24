@@ -48,6 +48,7 @@ BuildRequires:	gnome-python-gnomevfs
 BuildRequires:	python-alsaaudio
 BuildRequires:	python-feedparser
 BuildRequires:	python-gnome-menus
+BuildRequires:	python-devel
 BuildRequires:	avant-window-navigator >= 0.2.6
 Requires:	avant-window-navigator >= 0.2.6
 Requires:	notification-daemon
