@@ -1,4 +1,4 @@
-%define rel 1
+%define rel 2
 %define bzr 0
 
 %if %bzr
@@ -58,6 +58,8 @@ BuildRequires:	python-devel
 BuildRequires:	python-cairo-devel
 BuildRequires:	pygtk2.0-devel
 BuildRequires:	libglade2-devel
+BuildRequires:	tracker-devel
+BuildRequires:	beagle-devel
 BuildRequires:	avant-window-navigator >= 0.2.6
 Requires:	avant-window-navigator >= 0.2.6
 Requires:	notification-daemon
@@ -134,6 +136,11 @@ install pandora/*.pyc pandora/*.pyo %{buildroot}%{_libdir}/awn/applets/awn-pando
 install MiMenu/*.pyc MiMenu/*.pyo %{buildroot}%{_libdir}/awn/applets/mimenu
 install tsclient-applet/*.pyc tsclient-applet/*.pyo %{buildroot}%{_libdir}/awn/applets/tsclient-app
 
+# affinity-preferences is a namespace conflict with the original
+# affinity. Apparently you can have both installed at once without
+# trouble, they'll just share configuration. - AdamW 2008/02
+mv %{buildroot}%{_bindir}/affinity-preferences %{buildroot}%{_bindir}/awn-affinity-preferences
+
 %post
 %post_install_gconf_schemas %{schemas}
 
@@ -152,7 +159,7 @@ rm -rf %{buildroot}
 %{_datadir}/avant-window-navigator/applets/icons/*.svg
 %{_datadir}/avant-window-navigator/defs/*.defs
 %{_iconsdir}/hicolor/*/*/*.*
-%{_bindir}/affinity-preferences
+%{_bindir}/awn-affinity-preferences
 %{py_platsitedir}/awn/extras
 %{py_puresitedir}/awn/extras
 
