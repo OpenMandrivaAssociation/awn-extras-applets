@@ -49,6 +49,7 @@ BuildRequires:	python-alsaaudio
 BuildRequires:	python-feedparser
 BuildRequires:	python-gnome-menus
 BuildRequires:	python-devel
+BuildRequires:	python-cairo-devel
 BuildRequires:	avant-window-navigator >= 0.2.6
 Requires:	avant-window-navigator >= 0.2.6
 Requires:	notification-daemon
@@ -59,6 +60,7 @@ Requires:	gnome-python-gnomevfs
 Requires:	python-alsaaudio
 Requires:	python-feedparser
 Requires:	python-gnome-menus
+Requires:	python-cairo
 
 %description
 Avant-window-navigator is a dock-style window list for GNOME. It provides
