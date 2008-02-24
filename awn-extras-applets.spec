@@ -59,7 +59,7 @@ BuildRequires:	python-cairo-devel
 BuildRequires:	pygtk2.0-devel
 BuildRequires:	libglade2-devel
 BuildRequires:	tracker-devel
-BuildRequires:	beagle-devel
+BuildRequires:	libbeagle-devel
 BuildRequires:	avant-window-navigator >= 0.2.6
 Requires:	avant-window-navigator >= 0.2.6
 Requires:	notification-daemon
