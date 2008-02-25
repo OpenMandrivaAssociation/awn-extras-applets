@@ -161,7 +161,6 @@ rm -rf %{buildroot}
 %{_iconsdir}/hicolor/*/*/*.*
 %{_bindir}/awn-affinity-preferences
 %{py_platsitedir}/awn/extras
-%{py_puresitedir}/awn/extras
 
 %files -n %{libname}
 %{_libdir}/*.so.%{major}*
