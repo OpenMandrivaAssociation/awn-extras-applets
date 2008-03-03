@@ -1,4 +1,4 @@
-%define rel 3
+%define rel 4
 %define bzr 0
 
 %if %bzr
@@ -71,6 +71,7 @@ Requires:	python-alsaaudio
 Requires:	python-feedparser
 Requires:	python-gnome-menus
 Requires:	python-cairo
+Requires:	python-libgmail
 Requires:	pygtk2.0
 
 %description
