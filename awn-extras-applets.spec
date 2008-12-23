@@ -1,4 +1,4 @@
-%define rel 6
+%define rel 7
 %define bzr 0
 
 %if %bzr
@@ -29,7 +29,6 @@ Source0:	%{srcname}.tar.gz
 # From upstream dev malept: install Python stuff to platsitedir not
 # puresitedir - AdamW 2008/02
 Patch0:		awn-extras-applets-0.2.6-platsitedir.patch
-Patch1:		awn-extras-applets-0.2.6-fix-includes.patch
 License:	GPLv2+ and LGPLv2+
 Group:		Graphical desktop/GNOME
 URL:		https://launchpad.net/awn-extras
@@ -111,7 +110,8 @@ This package contains the development library for awn-extras-applets.
 %prep
 %setup -q -n %{distname}
 %patch0 -p1 -b .platsitedir
-%patch1 -p1
+# Fix a couple of hardcoded /usr/lib - AdamW 2008/12
+sed -i -e 's,/lib/awn/,/%{_lib}/awn/,g' src/plugger/applet.c src/trasher/applet.c
 
 %build
 %if %bzr
