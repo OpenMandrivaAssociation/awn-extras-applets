@@ -1,4 +1,4 @@
-%define rel 1
+%define rel 2
 %define bzr 0
 
 %if %bzr
@@ -16,17 +16,16 @@
 %define libname		%mklibname %library_name %major
 %define develname	%mklibname %library_name -d
 
-%define schemas switcher trash filebrowser awnsystemmonitor awn-notification-daemon
+%define schemas arss awn-notification-daemon awnsystemmonitor awnterm cairo-clock DesktopManager digitalClock file-browser-launcer filebrowser places pynot-rgba pynot shinyswitcher to-do trash 
 
-%define python_compile_opt python -O -c "import compileall; compileall.compile_dir('.')"
-%define python_compile     python -c "import compileall; compileall.compile_dir('.')"
+%define python_compile_opt python -O -c "import compileall; compileall.compile_dir('%{buildroot}')"
+%define python_compile     python -c "import compileall; compileall.compile_dir('%{buildroot}')"
 
 Summary:	Applets for Avant Window Navigator
 Name:		awn-extras-applets
 Version:	0.3.2
 Release:	%{release}
 Source0:	%{srcname}.tar.gz
-Patch1:		awn-extras-applets-0.2.6-fix-includes.patch
 License:	GPLv2+ and LGPLv2+
 Group:		Graphical desktop/GNOME
 URL:		https://launchpad.net/awn-extras
@@ -107,8 +106,7 @@ This package contains the development library for awn-extras-applets.
 
 %prep
 %setup -q -n %{distname}
-%patch0 -p1 -b .platsitedir
-%patch1 -p1 -b .includes
+
 # Fix a couple of hardcoded /usr/lib - AdamW 2008/12
 sed -i -e 's,/lib/awn/,/%{_lib}/awn/,g' src/plugger/applet.c src/trasher/applet.c
 
@@ -121,27 +119,13 @@ autoreconf
 %make
 
 %install
-rm -rf %{buildroot}
+%__rm -rf %{buildroot}
 %makeinstall_std
 %find_lang %name
 
-# Pre-generate .pyc and .pyo files as per Python policy.
-pushd src
+# Pre-generate .pyc and .pyo files as per Python policy:
 %python_compile_opt
 %python_compile
-for i in PyClock "arss/Core" arss battery-applet calendar "calendar/google/atom" "calendar/google/gdata" "calendar/google/gdata/apps" "calendar/google/gdata/base" "calendar/google/gdata/calendar" "calendar/google/gdata/docs" "calendar/google/gdata/spreadsheet" comic digitalClock file-browser-launcher lastfm mail media-control media-icon-back media-icon-next media-icon-play MiMenu mount-applet pandora python-test tsclient-applet quit-applet showdesktop stacks volume-control weather; \
-do install $i/*.pyc $i/*.pyo %{buildroot}%{_libdir}/awn/applets/$i; \
-done
-# Grr. Stupid upstream with their non-matching directory names! They
-# promise they will fix this.
-#install pandora/*.pyc pandora/*.pyo %{buildroot}%{_libdir}/awn/applets/awn-pandora
-#install MiMenu/*.pyc MiMenu/*.pyo %{buildroot}%{_libdir}/awn/applets/mimenu
-#install tsclient-applet/*.pyc tsclient-applet/*.pyo %{buildroot}%{_libdir}/awn/applets/tsclient-app
-
-# affinity-preferences is a namespace conflict with the original
-# affinity. Apparently you can have both installed at once without
-# trouble, they'll just share configuration. - AdamW 2008/02
-mv %{buildroot}%{_bindir}/affinity-preferences %{buildroot}%{_bindir}/awn-affinity-preferences
 
 %post
 %post_install_gconf_schemas %{schemas}
@@ -150,18 +134,16 @@ mv %{buildroot}%{_bindir}/affinity-preferences %{buildroot}%{_bindir}/awn-affini
 %preun_uninstall_gconf_schemas %{schemas}
 
 %clean
-rm -rf %{buildroot}
+%__rm -rf %{buildroot}
 
 %files -f %{name}.lang
 %defattr(-,root,root)
 %doc README AUTHORS ChangeLog
 %{_sysconfdir}/gconf/schemas/*
 %{_libdir}/awn/applets/*
-%{_datadir}/%{name}/*
-%{_datadir}/avant-window-navigator/applets/icons/*.svg
-%{_datadir}/avant-window-navigator/defs/*.defs
+%{_datadir}/avant-window-navigator/*
+%{_datadir}/vala
 %{_iconsdir}/hicolor/*/*/*.*
-%{_bindir}/awn-affinity-preferences
 %{py_platsitedir}/awn/extras
 
 %files -n %{libname}
@@ -171,3 +153,4 @@ rm -rf %{buildroot}
 %{_libdir}/*.*a
 %{_libdir}/*.so
 %{_includedir}/lib%{library_name}
+%{_libdir}/pkgconfig/*
