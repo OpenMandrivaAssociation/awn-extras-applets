@@ -48,6 +48,7 @@ BuildRequires:	gstreamer0.10-python
 BuildRequires:	gnome-python-gtkmozembed
 BuildRequires:	gnome-python-applet
 BuildRequires:	gnome-python-gnomevfs
+BuildRequires:	python-notify
 BuildRequires:	python-alsaaudio
 BuildRequires:	python-feedparser
 BuildRequires:	python-gnome-menus
@@ -64,6 +65,7 @@ Requires:	gstreamer0.10-python
 Requires:	gnome-python-gtkmozembed
 Requires:	gnome-python-applet
 Requires:	gnome-python-gnomevfs
+Requires:	python-notify
 Requires:	python-alsaaudio
 Requires:	python-feedparser
 Requires:	python-gnome-menus
