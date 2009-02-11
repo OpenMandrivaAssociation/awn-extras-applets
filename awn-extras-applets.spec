@@ -129,6 +129,8 @@ autoreconf
 %python_compile_opt
 %python_compile
 
+%__rm -rf %{buildroot}%{_datadir}/vala
+
 %post
 %post_install_gconf_schemas %{schemas}
 
@@ -144,7 +146,6 @@ autoreconf
 %{_sysconfdir}/gconf/schemas/*
 %{_libdir}/awn/applets/*
 %{_datadir}/avant-window-navigator/*
-%{_datadir}/vala
 %{_iconsdir}/hicolor/*/*/*.*
 %{py_platsitedir}/awn/extras
 
