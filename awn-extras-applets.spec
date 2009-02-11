@@ -147,7 +147,7 @@ autoreconf
 %{_libdir}/awn/applets/*
 %{_datadir}/avant-window-navigator/*
 %{_iconsdir}/hicolor/*/*/*.*
-%{py_platsitedir}/awn/extras
+%{py_sitedir}/awn/extras
 
 %files -n %{libname}
 %{_libdir}/*.so.%{major}*
