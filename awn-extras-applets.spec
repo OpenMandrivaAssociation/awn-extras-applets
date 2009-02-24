@@ -1,4 +1,4 @@
-%define rel 2
+%define rel 3
 %define bzr 0
 
 %if %bzr
@@ -60,7 +60,7 @@ BuildRequires:	tracker-devel
 BuildRequires:	libbeagle-devel
 BuildRequires:	avant-window-navigator >= 0.3.2
 Requires:	avant-window-navigator >= 0.3.2
-Requires:	notification-daemon
+Requires:	virtual-notification-daemon
 Requires:	gstreamer0.10-python
 Requires:	gnome-python-gtkmozembed
 Requires:	gnome-python-applet
