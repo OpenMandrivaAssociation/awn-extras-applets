@@ -1,4 +1,4 @@
-%define rel 4
+%define rel 1
 %define bzr 0
 
 %if %bzr
@@ -23,9 +23,10 @@
 
 Summary:	Applets for Avant Window Navigator
 Name:		awn-extras-applets
-Version:	0.3.2
+Version:	0.3.2.2
 Release:	%{release}
 Source0:	%{srcname}.tar.gz
+Patch0:		awn-extras-applets-0.3.2.2-fix-makefile-calendar.patch
 License:	GPLv2+ and LGPLv2+
 Group:		Graphical desktop/GNOME
 URL:		https://launchpad.net/awn-extras
@@ -36,6 +37,7 @@ BuildRequires:	intltool
 BuildRequires:	libgtk+2-devel
 BuildRequires:	libgnome2-devel
 BuildRequires:	libgnome-desktop-2-devel
+BuildRequires:  libgnomeui2-devel
 BuildRequires:	libwnck-devel
 BuildRequires:	libnotify-devel
 BuildRequires:	awn-devel
@@ -59,6 +61,7 @@ BuildRequires:	libglade2-devel
 BuildRequires:	tracker-devel
 BuildRequires:	libbeagle-devel
 BuildRequires:	avant-window-navigator >= 0.3.2
+BuildRequires:	vala
 Requires:	avant-window-navigator >= 0.3.2
 Requires:	virtual-notification-daemon
 Requires:	gstreamer0.10-python
@@ -108,6 +111,7 @@ This package contains the development library for awn-extras-applets.
 
 %prep
 %setup -q -n %{distname}
+%patch0 -p0
 
 # Fix a couple of hardcoded /usr/lib - AdamW 2008/12
 sed -i -e 's,/lib/awn/,/%{_lib}/awn/,g' src/plugger/applet.c src/trasher/applet.c
@@ -117,6 +121,9 @@ sed -i -e 's,/lib/awn/,/%{_lib}/awn/,g' src/plugger/applet.c src/trasher/applet.
 ./autogen.sh -V
 %endif
 autoreconf
+# manually set xulrunner path for gnome-python-gtkmozembed
+LD_LIBRARY_PATH=%{_libdir}/xulrunner-%{firefox_xulrunner_version}
+export LD_LIBRARY_PATH
 %configure --disable-schemas-install
 %make
 
@@ -147,7 +154,7 @@ autoreconf
 %{_libdir}/awn/applets/*
 %{_datadir}/avant-window-navigator/*
 %{_iconsdir}/hicolor/*/*/*.*
-%{py_sitedir}/awn/extras
+%{python_sitearch}/awn/extras
 
 %files -n %{libname}
 %{_libdir}/*.so.%{major}*
