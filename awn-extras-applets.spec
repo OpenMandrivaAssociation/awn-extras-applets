@@ -1,3 +1,4 @@
+%define xulrunnerpath %{_libdir}/xulrunner-1.9.2
 %define rel 1
 %define bzr 0
 
@@ -122,7 +123,7 @@ sed -i -e 's,/lib/awn/,/%{_lib}/awn/,g' src/plugger/applet.c src/trasher/applet.
 %endif
 autoreconf
 # manually set xulrunner path for gnome-python-gtkmozembed
-LD_LIBRARY_PATH=%{_libdir}/xulrunner-%{firefox_xulrunner_version}
+LD_LIBRARY_PATH=%{xulrunnerpath}
 export LD_LIBRARY_PATH
 %configure --disable-schemas-install
 %make
