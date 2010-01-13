@@ -1,5 +1,5 @@
 %define xulrunnerpath %{_libdir}/xulrunner-1.9.2
-%define rel 1
+%define rel 2
 %define bzr 0
 
 %if %bzr
