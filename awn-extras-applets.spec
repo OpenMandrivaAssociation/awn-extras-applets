@@ -38,6 +38,7 @@ BuildRequires:	libnotify-devel
 BuildRequires:	awn-devel >= 0.4.0
 BuildRequires:	gnome-menus-devel
 BuildRequires:	gnome-python-desktop
+BuildRequires:	gnome-python-gconf
 BuildRequires:	vte-devel
 BuildRequires:	gstreamer0.10-python
 BuildRequires:	python-notify
@@ -54,6 +55,7 @@ Requires:	avant-window-navigator >= 0.4.0
 #Requires:	gnome-python-gtkmozembed
 Requires:	gnome-python-applet
 Requires:	gnome-python-gnomevfs
+Requires:	gnome-python-gconf
 #Requires:	python-alsaaudio
 Requires:	python-libgmail
 Requires:	pygtk2.0
