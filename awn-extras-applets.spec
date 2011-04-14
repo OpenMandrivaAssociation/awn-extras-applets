@@ -6,10 +6,11 @@
 Summary:	Applets for Avant Window Navigator
 Name:		awn-extras-applets
 Version:	0.4.0
-Release:	%mkrel 2
+Release:	%mkrel 3
 Source0:	%{srcname}-%{version}.tar.gz
 Patch0:		awn-extras-applets-0.4.0-python_dir.patch
 Patch1:		awn-extras-applets-0.4.0-fix-cairo-menu.patch
+Patch2:		awn-extras-0.4.0-libnotify.patch
 License:	GPLv2+ and LGPLv2+
 Group:		Graphical desktop/GNOME
 URL:		https://launchpad.net/awn-extras
@@ -79,10 +80,11 @@ battery monitor, trash applet, volume control, weather applet and more.
 %setup -q -n %{srcname}-%{version}
 %patch0 -p0 -b .python
 %patch1 -p0 -b .cairo-menu
+%patch2 -p0 -b .libnotify
 
 %build
 ./autogen.sh -V
-%configure --disable-static \
+%configure2_5x --disable-static \
 	--with-webkit \
 	--disable-static \
 	--enable-shave \
