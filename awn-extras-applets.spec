@@ -6,7 +6,7 @@
 Summary:	Applets for Avant Window Navigator
 Name:		awn-extras-applets
 Version:	0.4.0
-Release:	%mkrel 4
+Release:	%mkrel 5
 Source0:	%{srcname}-%{version}.tar.gz
 Patch0:		awn-extras-applets-0.4.0-python_dir.patch
 Patch1:		awn-extras-applets-0.4.0-fix-cairo-menu.patch
