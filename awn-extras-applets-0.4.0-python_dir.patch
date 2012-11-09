@@ -1,0 +1,15 @@
+=== modified file 'shared/python/Makefile.am'
+--- shared/python/Makefile.am	2010-01-02 20:40:44 +0000
++++ shared/python/Makefile.am	2010-04-13 15:07:03 +0000
+@@ -1,7 +1,9 @@
+ NULL =
+ 
+ # awn python scripts
+-pyawn_extrasdir = $(pythondir)/awn/extras
++# python doesn't like that awn is platform-specific, but awn.extras isn't
++#pyawn_extrasdir = $(pythondir)/awn/extras
++pyawn_extrasdir = $(pyexecdir)/awn/extras
+ pyawn_extras_PYTHON =	\
+ 	__init__.py	\
+ 	awnlib.py	\
+

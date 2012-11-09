@@ -1,0 +1,32 @@
+=== modified file 'applets/maintained/cairo-menu/cairo-menu-applet.c'
+--- applets/maintained/cairo-menu/cairo-menu-applet.c	2010-03-28 15:07:05 +0000
++++ applets/maintained/cairo-menu/cairo-menu-applet.c	2010-04-14 14:29:04 +0000
+@@ -156,12 +156,11 @@
+    TODO fix the various travesties*/
+   GList * iter;
+   GError * error = NULL;
+-  gchar * filename = APPLETSDIR"/../../../lib/awn/applets/cairo-menu/gnome-menu-builder";
++  gchar * filename = LIBDIR"/awn/applets/cairo-menu/gnome-menu-builder";
+   GModule      *module;
+ 
+   G_OBJECT_CLASS (cairo_menu_applet_parent_class)->constructed (object);
+-  module = g_module_open (filename, 
+-                          G_MODULE_BIND_LAZY);  
++  module = g_module_open (filename,G_MODULE_BIND_LAZY);  
+   g_assert (module);
+   if (!g_module_symbol (module, "menu_build", (gpointer *)&menu_build))
+   {
+
+=== modified file 'configure.ac'
+--- configure.ac	2010-04-11 17:34:16 +0000
++++ configure.ac	2010-04-14 14:27:47 +0000
+@@ -269,6 +269,8 @@
+ AC_SUBST(APPLETSDIR)
+ AC_DEFINE_UNQUOTED(LOCALEDIR, "$LOCALEDIR", [Locale directory])
+ AC_SUBST(LOCALEDIR)
++AC_DEFINE_UNQUOTED(LIBDIR, "$LIBDIR", [Lib directory])
++AC_SUBST(LIBDIR)
+ 
+ DBUS_SERVICES_DIR=`$PKG_CONFIG --variable=session_bus_services_dir dbus-1`
+ AC_SUBST(DBUS_SERVICES_DIR)
+
